@@ -27,17 +27,15 @@
     ;; git add <new-file>
     (:action git-add-new
         :parameters (?f - file)
-        :precondition (and (untracked ?f))
+        :precondition (and (untracked ?f) (not (staged ?f)))
         :effect (and (staged ?f) (not (untracked ?f)))
     )
 
     ;; git add <old-file>
     (:action git-add
         :parameters (?f - file)
-        :precondition (and ...)
-        :effect (and
-            ...
-        )
+        :precondition (and (modified-in-workspace ?f) (not (staged ?f)))
+        :effect (and (staged ?f) (not (modified-in-workspace ?f)))
     )
 
     ;; git rm <old-file>
