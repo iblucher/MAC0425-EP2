@@ -27,10 +27,8 @@
     ;; git add <new-file>
     (:action git-add-new
         :parameters (?f - file)
-        :precondition (and ...)
-        :effect (and
-            ...
-        )
+        :precondition (and (untracked ?f))
+        :effect (and (staged ?f) (not (untracked ?f)))
     )
 
     ;; git add <old-file>
@@ -41,7 +39,7 @@
             ...
         )
     )
-    
+
     ;; git rm <old-file>
     (:action git-rm
         :parameters (?f - file)
@@ -50,7 +48,7 @@
             ...
         )
     )
-    
+
     ;; git checkout -- <old-file>
     (:action git-checkout
         :parameters (?f - file)
@@ -59,7 +57,7 @@
             ...
         )
     )
-    
+
     ;; git reset -- <old-file>
     (:action git-reset
         :parameters (?f - file)
@@ -68,7 +66,7 @@
             ...
         )
     )
-    
+
     ;; git reset -- <new-file>
     (:action git-reset-new
         :parameters (?f - file)
