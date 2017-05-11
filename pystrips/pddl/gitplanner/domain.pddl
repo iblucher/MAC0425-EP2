@@ -77,9 +77,8 @@
     ;; git commit <file>
     (:action git-commit
         :parameters (?f - file)
-        :precondition (and ...)
-        :effect (and
-            ...
-        )
+        :precondition (and (staged ?f) (not (committed ?f)))
+        :effect (and (commited ?f) (clean ?f) (not (staged ?f)))
     )
+
 )
