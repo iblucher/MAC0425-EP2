@@ -41,37 +41,29 @@
     ;; git rm <old-file>
     (:action git-rm
         :parameters (?f - file)
-        :precondition (and ...)
-        :effect (and
-            ...
-        )
+        :precondition (and (not (deleted-in-workspace ?f)) (not (staged ?f)))
+        :effect (and (deleted-in-workspace ?f) (staged ?f))
     )
 
     ;; git checkout -- <old-file>
     (:action git-checkout
         :parameters (?f - file)
-        :precondition (and ...)
-        :effect (and
-            ...
-        )
+        :precondition (and (modified-in-workspace ?f))
+        :effect (and (clean ?f) (untracked ?f))
     )
 
     ;; git reset -- <old-file>
     (:action git-reset
         :parameters (?f - file)
-        :precondition (and ...)
-        :effect (and
-            ...
-        )
+        :precondition (and (staged ?f))
+        :effect (and (modified-in-workspace ?f) (not (staged ?f)))
     )
 
     ;; git reset -- <new-file>
     (:action git-reset-new
         :parameters (?f - file)
-        :precondition (and ...)
-        :effect (and
-            ...
-        )
+        :precondition (and (staged ?f))
+        :effect (and (untracked ?f) (not (staged ?f)))
     )
 
     ;; git commit <file>
