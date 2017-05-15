@@ -41,8 +41,8 @@
     ;; git rm <old-file>
     (:action git-rm
         :parameters (?f - file)
-        :precondition (and (not (deleted-in-workspace ?f)) (not (staged ?f)))
-        :effect (and (deleted-in-workspace ?f) (staged ?f))
+        :precondition ((deleted-in-workspace ?f) (not (staged ?f)))
+        :effect (and (staged ?f))
     )
 
     ;; git checkout -- <old-file>
