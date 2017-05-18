@@ -41,7 +41,7 @@
     ;; git rm <old-file>
     (:action git-rm
         :parameters (?f - file)
-        :precondition ((deleted-in-workspace ?f) (not (staged ?f)))
+        :precondition (and (deleted-in-workspace ?f) (not (staged ?f)))
         :effect (and (staged ?f))
     )
 
@@ -49,7 +49,7 @@
     (:action git-checkout
         :parameters (?f - file)
         :precondition (and (modified-in-workspace ?f))
-        :effect (and (clean ?f) (untracked ?f))
+        :effect (and (clean ?f) (not (staged ?f)))
     )
 
     ;; git reset -- <old-file>
@@ -70,7 +70,7 @@
     (:action git-commit
         :parameters (?f - file)
         :precondition (and (staged ?f) (not (committed ?f)))
-        :effect (and (commited ?f) (clean ?f) (not (staged ?f)))
+        :effect (and (committed ?f) (clean ?f) (not (staged ?f)))
     )
 
 )
