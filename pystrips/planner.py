@@ -71,9 +71,8 @@ class ProgressionPlanning(object):
         ''' Return a list of applicable actions in a given `state`. '''
         applicable_actions = []
         for action in self._all_actions:
-            for precond in action.precond:
-                if precond in state:
-                    applicable_actions.append(action)
+            if action.precond.issubset(state):
+                applicable_actions.append(action)
         applicable_actions = list(set(applicable_actions))
         return applicable_actions
 
