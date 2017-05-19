@@ -108,16 +108,26 @@ class ProgressionPlanning(object):
         regardless whether or not it is in the explored set or already in the frontier.
         '''
         plan = []
+        explored = []
         num_explored = 0
         num_generated = 0
 
-        lst = self.applicable(self._problem.init)
-        print(lst)
+        f = lambda node: node.g + W*node.h
 
-        s = self.successor(self._problem.init, lst[0])
-        print(s)
-
-        test = self.goal_test(self._problem.init)
-        print(test)
-
-        util.raiseNotDefined()
+        frontier = Frontier(f)
+        node = Node(tuple(self._problem.init))
+        frontier.push(node)
+        while not frontier.is_empty():
+            current_node = frontier.pop()
+            explored.append(current_node)
+            num_explored += 1
+            if self.goal_test(set(current_node.state)):
+                plan = current_node.path()
+                return (plan, num_explored, num_generated)
+            for action in self.applicable(set(current_node.state)):
+                successor_state = tuple(self.successor(set(current_node.state), action))
+                successor_node = Node(successor_state, action, current_node, current_node.g + 1, heuristics(successor_state, self))
+                num_generated += 1
+                if successor_node not in explored:
+                    if successor_node not in frontier:
+                        frontier.push(successor_node)
