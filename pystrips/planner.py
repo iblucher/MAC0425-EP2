@@ -113,7 +113,6 @@ class ProgressionPlanning(object):
         frontier = Frontier(f = lambda node: node.g + W*node.h)
         node = Node(tuple(self._problem.init))
         frontier.push(node)
-
         while not frontier.is_empty():
             current_node = frontier.pop()
             explored.append(current_node)
