@@ -1,3 +1,6 @@
+# Nome: Isabela Blucher
+# NUSP: 9298170
+
 from term import Term
 
 

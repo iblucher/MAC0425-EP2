@@ -1,6 +1,8 @@
+# Nome: Isabela Blucher
+# NUSP: 9298170
+
 import sys
 import util
-
 
 def h_naive(state, planning):
     return 0
@@ -44,9 +46,11 @@ def h_add(state, planning):
                 if h.get(q) == None:
                     h[q] = sys.maxsize
                 if(h.get(q) > s + 1):
+                    # houve atualização dos valores
                     h[q] = s + 1
                     condition = True
                 else:
+                    # valores não foram atualizados, logo, é a nossa condição de parada
                     condition = False
     res = 0
     for p in planning.problem.goal:
@@ -86,9 +90,11 @@ def h_max(state, planning):
                 if h.get(q) == None:
                     h[q] = sys.maxsize
                 if(h.get(q) > s + 1):
+                    # houve atualização dos valores
                     h[q] = s + 1
                     condition = True
                 else:
+                    # valores não foram atualizados, logo, é a nossa condição de parada
                     condition = False
     maximum = -1
     for p in planning.problem.goal:

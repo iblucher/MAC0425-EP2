@@ -1,3 +1,6 @@
+# Nome: Isabela Blucher
+# NUSP: 9298170
+
 import heapq
 import inspect
 import sys

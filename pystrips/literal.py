@@ -1,3 +1,6 @@
+# Nome: Isabela Blucher
+# NUSP: 9298170
+
 class Literal(object):
 
     def __init__(self, predicate, positive):

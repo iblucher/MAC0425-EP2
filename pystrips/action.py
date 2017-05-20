@@ -1,3 +1,6 @@
+# Nome: Isabela Blucher
+# NUSP: 9298170
+
 class Operator(object):
 
     ''' STRIPS operator class '''
