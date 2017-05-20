@@ -112,7 +112,9 @@ class ProgressionPlanning(object):
         num_explored = 0
         num_generated = 0
 
-        frontier = Frontier(f = lambda node: node.g + W*node.h)
+        f = lambda node: node.g + W*node.h
+
+        frontier = Frontier(f)
         node = Node(tuple(self._problem.init))
         frontier.push(node)
         while not frontier.is_empty():
@@ -129,5 +131,4 @@ class ProgressionPlanning(object):
                     if successor_node not in frontier:
                         num_generated += 1
                         frontier.push(successor_node)
-
         return None
