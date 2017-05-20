@@ -19,12 +19,17 @@ def h_add(state, planning):
     outros átomos da meta recebem infinito.
     '''
     h = {}
+    condition = True
+    s = 0
+
     for p in state:
         h[p] = 0
     for p in planning.problem.goal:
         if p not in state:
             h[p] = sys.maxsize
-    X = state
+        else:
+            h[p] = 0
+    X = set(state)
     while condition:
         for action in planning.applicable(X):
             pos = action.pos_effect
@@ -32,22 +37,21 @@ def h_add(state, planning):
             # soma dos custos das pré-condições da ação
             for precond in action.precond:
                 # caso o átomo não tenha valor atribuído, atribua "infinito"
-                if h[precond] != 0 and h[precond] != sys.maxsize:
+                if h.get(precond) == None:
                     h[precond] = sys.maxsize
-                s = s + h[precond]
+                s = s + h.get(precond)
             for q in pos:
-                if(h[q] > s + 1):
+                if h.get(q) == None:
+                    h[q] = sys.maxsize
+                if(h.get(q) > s + 1):
                     h[q] = s + 1
                     condition = True
                 else:
                     condition = False
+    res = 0
     for p in planning.problem.goal:
-        res = res + h[p]
+        res = res + h.get(p)
     return res
-
-
-
-
 
 
 def h_max(state, planning):
@@ -58,12 +62,16 @@ def h_max(state, planning):
     to access the applicable actions and problem information.
     '''
     h = {}
+    condition = True
+    s = 0
+
     for p in state:
         h[p] = 0
     for p in planning.problem.goal:
         if p not in state:
             h[p] = sys.maxsize
-    X = state
+    X = set(state)
+    condition = True
     while condition:
         for action in planning.applicable(X):
             pos = action.pos_effect
@@ -71,18 +79,22 @@ def h_max(state, planning):
             # soma dos custos das pré-condições da ação
             for precond in action.precond:
                 # caso o átomo não tenha valor atribuído, atribua "infinito"
-                if h[precond] != 0 and h[precond] != sys.maxsize:
+                if h.get(precond) == None:
                     h[precond] = sys.maxsize
-                s = s + h[precond]
+                s = s + h.get(precond)
             for q in pos:
-                if(h[q] > s + 1):
+                if h.get(q) == None:
+                    h[q] = sys.maxsize
+                if(h.get(q) > s + 1):
                     h[q] = s + 1
                     condition = True
                 else:
                     condition = False
+    maximum = -1
     for p in planning.problem.goal:
-        res = res + h[p]
-    return res 
+        if h.get(p) > maximum:
+            maximum = h[p]
+    return maximum
 
 
 def h_ff(state, planning):
